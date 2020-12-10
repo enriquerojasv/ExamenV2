@@ -8,7 +8,10 @@
     android:orientation="vertical"
     tools:context=".MainActivity"
     android:background="#217FD3"
+
     >
+
+
 
 
     <ImageView

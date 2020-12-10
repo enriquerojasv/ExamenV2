@@ -2,8 +2,11 @@ package com.androidclase.postadesol;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         animatorSet = new AnimatorSet();
 
         circleIV = findViewById(R.id.circleIV);
@@ -32,20 +36,30 @@ public class MainActivity extends AppCompatActivity {
         skyFL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animacion("ejeY");
+                animacion(skyFL);
+                startColorAnimation(skyFL);
             }
         });
     }
 
-    private void animacion(String animacion) {
-        switch (animacion) {
-            case "ejeY":
-                animatorY = ObjectAnimator.ofFloat(circleIV, "y", 1100f);
-                animatorY.setDuration(animationDuration);
-                AnimatorSet animatorSetY = new AnimatorSet();
-                animatorSetY.play(animatorY);
-                animatorSetY.start();
-                break;
-        }
+    private void startColorAnimation(View v) {
+        int colorStart = 0xFF217FD3;
+        int color2 = 0xFF9E8D84;
+        int color3 = 0xFFF2A523;
+        int colorEnd = 0xFF000000;
+
+        ValueAnimator colorAnim = ObjectAnimator.ofInt(v, "backgroundColor", colorStart, color2, color3, colorEnd);
+
+        colorAnim.setDuration(animationDuration+1500);
+        colorAnim.setEvaluator(new ArgbEvaluator());
+        colorAnim.start();
+    }
+
+    private void animacion(FrameLayout skyFL) {
+        animatorY = ObjectAnimator.ofFloat(circleIV, "y", 1100f);
+        animatorY.setDuration(animationDuration);
+        AnimatorSet animatorSetY = new AnimatorSet();
+        animatorSetY.play(animatorY);
+        animatorSetY.start();
     }
 }
